@@ -42,7 +42,7 @@ To run this project, you need the following dependencies:
 4. Install the required dependencies:
     ```powershell
     pip install -r requirements.txt
-    use 'uv add'command
+    use 'uv add' + 'your dependencies'command to install
     ```
 
 5. Create a .env file in the root directory of the project and add your Hugging Face API key:
@@ -55,4 +55,4 @@ To run this project, you need the following dependencies:
 To start the chatbot app, run the following command:
 
 ```powershell
-streamlit run app.py
+streamlit run demo3.py
