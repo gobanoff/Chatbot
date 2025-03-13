@@ -3,6 +3,8 @@ import streamlit as st
 import requests
 import os
 from dotenv import load_dotenv
+import PyPDF2
+from docx import Document
 
 load_dotenv()
 
@@ -43,6 +45,64 @@ def get_response(prompt):
         return f"Error: {response.status_code} - {response.json()}"
 
 
+
+
+
+# Handle file upload
+uploaded_file = st.file_uploader("Upload a file", type=["txt", "pdf", "docx"])
+
+if uploaded_file:
+    # Extract text depending on file type (for example, PDF or DOCX)
+    file_extension = uploaded_file.name.split('.')[-1].lower()
+
+    if file_extension == 'txt':
+        file_text = uploaded_file.read().decode("utf-8")
+    elif file_extension == 'pdf':
+        
+        pdf_reader = PyPDF2.PdfReader(uploaded_file)
+        file_text = ""
+        for page in pdf_reader.pages:
+            file_text += page.extract_text()
+    elif file_extension == 'docx':
+       
+        doc = Document(uploaded_file)
+        file_text = "\n".join([para.text for para in doc.paragraphs])
+    else:
+        file_text = "Unsupported file type"
+
+    # Show extracted text
+    st.text_area("Extracted text from file", file_text, height=200)
+
+    # Generate a response based on the extracted text
+    if file_text:
+        prompt = file_text  # Use extracted text as input for model
+        # Add user message to history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
+        # View user message
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # Generate answer
+        with st.spinner("Thinking... Mąstau..."):
+            reply = get_response(prompt)
+
+            # Response view
+            with st.chat_message("assistant"):
+                st.markdown(reply)
+
+            # history
+            st.session_state.messages.append({"role": "assistant", "content": reply})
+
+
+
+
+
+
+
+
+
+
 # user input
 if prompt := st.chat_input("Įveskite savo žinutę čia..."):
     # add user message to history
@@ -71,3 +131,11 @@ if prompt := st.chat_input("Įveskite savo žinutę čia..."):
 
 
 
+
+
+
+
+
+
+
+       
