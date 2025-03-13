@@ -44,7 +44,7 @@ def get_response(prompt):
 
 
 # user input
-if prompt := st.chat_input("Įveskite savo žinutę čia...1"):
+if prompt := st.chat_input("Įveskite savo žinutę čia..."):
     # add user message to history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
