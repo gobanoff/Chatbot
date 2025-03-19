@@ -18,6 +18,85 @@ client = OpenAI(
     api_key= secret_key
 )
 
+st.markdown("""
+    <style>
+        /* Body Styling */
+        .main { 
+            background-color: #ff0000 !important;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Styling the Title */
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 3em;
+        }
+
+        /* Chat History Container */
+        .chat-history-container {
+            background-color: #ff0000 !important;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        /* Styling the message */
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .message.user {
+            background-color: #f0f8ff;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .message.assistant {
+            background-color: #e0e0e0;
+            border-left: 5px solid #2196F3;
+        }
+
+        /* File uploader style */
+        .file-uploader {
+            padding: 10px;
+            background-color:#ff0000 !important;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* Input Box Styling */
+        .stTextInput, .stTextArea {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .stButton>button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .stButton>button:hover {
+            background-color: #45a049;
+        }
+    </style>"""
+, unsafe_allow_html=True)
+
+
+
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -32,7 +111,8 @@ with st.container():
             with st.expander(f"{message['role'].capitalize()} says:"):
                 st.markdown(message["content"])
 
-
+ 
+          
 
 
 
@@ -88,6 +168,7 @@ if prompt := st.chat_input("What is up?"):
             stream=True,
         )
         response = st.write_stream(stream)
+       
     st.session_state.messages.append({"role": "assistant", "content": response})
 
 
