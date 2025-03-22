@@ -11,6 +11,7 @@ secret_key = os.getenv('GITHUB_TOKEN')
 weather_api_key = os.getenv('WEATHER_API_KEY')
 
 client = OpenAI(
+   
     base_url="https://models.inference.ai.azure.com",
     api_key= secret_key
 )
