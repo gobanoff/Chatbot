@@ -1,0 +1,2 @@
+User: What is the weather like in Berlin today?
+Assistant: The temperature in Berlin is 12.5 degrees Celsius.
